@@ -32,20 +32,20 @@ impl Submarine {
 
     pub fn command(&mut self, cmd: Command) {
         match cmd.dir {
-            Direction::Forward => { self.position += cmd.amount },
-            Direction::Down => { self.depth += cmd.amount },
-            Direction::Up => { self.depth -= cmd.amount },
+            Direction::Forward => self.position += cmd.amount,
+            Direction::Down => self.depth += cmd.amount,
+            Direction::Up => self.depth -= cmd.amount,
         }
     }
 
     pub fn aim(&mut self, cmd: Command) {
         match cmd.dir {
-            Direction::Forward => { 
+            Direction::Forward => {
                 self.position += cmd.amount;
                 self.depth += self.aim * cmd.amount;
-            },
-            Direction::Down => { self.aim += cmd.amount },
-            Direction::Up => { self.aim -= cmd.amount },
+            }
+            Direction::Down => self.aim += cmd.amount,
+            Direction::Up => self.aim -= cmd.amount,
         }
     }
 }
@@ -55,22 +55,20 @@ fn parse_command(cmd: &str) -> Command {
     let dir: Direction;
     let amount: usize;
     match iter.next().unwrap() {
-        "forward" => { dir = Direction::Forward },
-        "down" => { dir = Direction::Down },
-        "up" => { dir = Direction::Up },
-        _ => { panic!("Something went wrong") },
+        "forward" => dir = Direction::Forward,
+        "down" => dir = Direction::Down,
+        "up" => dir = Direction::Up,
+        _ => {
+            panic!("Something went wrong")
+        }
     };
     amount = iter.next().unwrap().parse().unwrap();
-    Command {
-        dir,
-        amount,
-    }
+    Command { dir, amount }
 }
 
 fn part1(lines: &[String]) -> usize {
     let mut sub = Submarine::new();
-    let cmds: Vec<Command> = lines
-        .iter().map(|line| parse_command(line)).collect();
+    let cmds: Vec<Command> = lines.iter().map(|line| parse_command(line)).collect();
     for cmd in cmds {
         sub.command(cmd);
     }
@@ -79,15 +77,14 @@ fn part1(lines: &[String]) -> usize {
 
 fn part2(lines: &[String]) -> usize {
     let mut sub = Submarine::new();
-    let cmds: Vec<Command> = lines
-        .iter().map(|line| parse_command(line)).collect();
+    let cmds: Vec<Command> = lines.iter().map(|line| parse_command(line)).collect();
     for cmd in cmds {
         sub.aim(cmd);
     }
     sub.result()
 }
 
-pub fn run(){
+pub fn run() {
     let lines = input_lines("inputs/02.txt");
 
     println!("[Day 02] Part 1: {}", part1(&lines));
@@ -119,4 +116,3 @@ mod tests {
         assert_eq!(part2(&get_test_input()), 900);
     }
 }
-

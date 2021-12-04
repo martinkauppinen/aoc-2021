@@ -16,7 +16,7 @@ fn part2(numbers: &[isize]) -> usize {
     sequence_increases(sums)
 }
 
-pub fn run(){
+pub fn run() {
     let lines = input_lines("inputs/01.txt");
     let numbers: Vec<isize> = lines
         .iter()
@@ -30,19 +30,7 @@ pub fn run(){
 #[cfg(test)]
 mod tests {
     use super::*;
-    const NUMBERS: [isize; 10] = [
-        199,
-        200,
-        208,
-        210,
-        200,
-        207,
-        240,
-        269,
-        260,
-        263,
-    ];
- 
+    const NUMBERS: [isize; 10] = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
 
     #[test]
     fn test_part1() {

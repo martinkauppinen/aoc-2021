@@ -5,4 +5,3 @@ pub fn input_lines(filename: &str) -> Vec<String> {
         .map(|line| line.parse().unwrap())
         .collect::<Vec<String>>()
 }
-
