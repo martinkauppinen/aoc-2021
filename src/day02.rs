@@ -1,5 +1,3 @@
-use crate::lib::input_lines;
-
 enum Direction {
     Forward,
     Down,
@@ -84,11 +82,9 @@ fn part2(lines: &[String]) -> usize {
     sub.result()
 }
 
-pub fn run() {
-    let lines = input_lines("inputs/02.txt");
-
-    println!("[Day 02] Part 1: {}", part1(&lines));
-    println!("[Day 02] Part 2: {}", part2(&lines));
+pub fn run(lines: &[String]) {
+    println!("[Day 02] Part 1: {}", part1(lines));
+    println!("[Day 02] Part 2: {}", part2(lines));
 }
 
 #[cfg(test)]

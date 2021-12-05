@@ -1,4 +1,3 @@
-use crate::lib::input_lines;
 use std::cmp::{max, min};
 use std::collections::HashMap;
 use std::num::ParseIntError;
@@ -118,11 +117,9 @@ fn part2(lines: &[String]) -> usize {
     count_points(ps).values().filter(|x| *x > &1).count()
 }
 
-pub fn run() {
-    let lines = input_lines("inputs/05.txt");
-
-    println!("[Day 05] Part 1: {}", part1(&lines));
-    println!("[Day 05] Part 2: {}", part2(&lines));
+pub fn run(lines: &[String]) {
+    println!("[Day 05] Part 1: {}", part1(lines));
+    println!("[Day 05] Part 2: {}", part2(lines));
 }
 
 #[cfg(test)]

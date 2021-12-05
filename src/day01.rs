@@ -1,5 +1,3 @@
-use crate::lib::input_lines;
-
 fn sequence_increases(sequence: Vec<isize>) -> usize {
     let pairs = sequence.as_slice().windows(2);
     let differences = pairs.map(|p| p[1] - p[0]);
@@ -16,8 +14,7 @@ fn part2(numbers: &[isize]) -> usize {
     sequence_increases(sums)
 }
 
-pub fn run() {
-    let lines = input_lines("inputs/01.txt");
+pub fn run(lines: &[String]) {
     let numbers: Vec<isize> = lines
         .iter()
         .map(|line| line.parse::<isize>().unwrap())

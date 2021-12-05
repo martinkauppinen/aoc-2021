@@ -1,5 +1,3 @@
-use crate::lib::input_lines;
-
 #[derive(Debug)]
 struct Board {
     board: Vec<Vec<Option<usize>>>,
@@ -133,11 +131,9 @@ fn part2(lines: &[String]) -> usize {
     last_board.unmarked_sum() * last_number
 }
 
-pub fn run() {
-    let lines = input_lines("inputs/04.txt");
-
-    println!("[Day 04] Part 1: {}", part1(&lines));
-    println!("[Day 04] Part 2: {}", part2(&lines));
+pub fn run(lines: &[String]) {
+    println!("[Day 04] Part 1: {}", part1(lines));
+    println!("[Day 04] Part 2: {}", part2(lines));
 }
 
 #[cfg(test)]

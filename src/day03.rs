@@ -1,5 +1,3 @@
-use crate::lib::input_lines;
-
 fn strings_to_nums(lines: &[String]) -> Vec<u32> {
     lines
         .iter()
@@ -73,11 +71,9 @@ fn part2(lines: &[String]) -> u32 {
     oxygen_generator_rating * co2_scrubber_rating
 }
 
-pub fn run() {
-    let lines = input_lines("inputs/03.txt");
-
-    println!("[Day 03] Part 1: {}", part1(&lines));
-    println!("[Day 03] Part 2: {}", part2(&lines));
+pub fn run(lines: &[String]) {
+    println!("[Day 03] Part 1: {}", part1(lines));
+    println!("[Day 03] Part 2: {}", part2(lines));
 }
 
 #[cfg(test)]
