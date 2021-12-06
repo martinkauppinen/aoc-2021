@@ -118,8 +118,7 @@ fn part2(lines: &[String]) -> usize {
 }
 
 pub fn run(lines: &[String]) {
-    println!("[Day 05] Part 1: {}", part1(lines));
-    println!("[Day 05] Part 2: {}", part2(lines));
+    run_parts!(lines);
 }
 
 #[cfg(test)]

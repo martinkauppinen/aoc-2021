@@ -20,8 +20,7 @@ pub fn run(lines: &[String]) {
         .map(|line| line.parse::<isize>().unwrap())
         .collect();
 
-    println!("[Day 01] Part 1: {}", part1(&numbers));
-    println!("[Day 01] Part 2: {}", part2(&numbers));
+    run_parts!(numbers);
 }
 
 #[cfg(test)]

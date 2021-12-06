@@ -29,8 +29,7 @@ fn parse_input(s: &str) -> Vec<usize> {
 
 pub fn run(lines: &[String]) {
     let init_state = parse_input(&lines[0]);
-    println!("[Day 06] Part 1: {}", part1(&init_state));
-    println!("[Day 06] Part 2: {}", part2(&init_state));
+    run_parts!(init_state);
 }
 
 #[cfg(test)]
