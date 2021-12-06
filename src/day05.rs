@@ -1,13 +1,36 @@
 use std::cmp::{max, min};
-use std::collections::HashMap;
 use std::num::ParseIntError;
 use std::ops::{Add, Mul, Sub};
 use std::str::FromStr;
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 struct Point {
     x: isize,
     y: isize,
+}
+
+struct Grid {
+    grid: Vec<Vec<usize>>,
+}
+
+impl Grid {
+    pub fn new() -> Self {
+        Self {
+            grid: vec![vec![0; 1000]; 1000],
+        }
+    }
+
+    pub fn insert_span(&mut self, ps: Vec<Point>) {
+        for p in ps {
+            self.grid[p.x as usize][p.y as usize] += 1;
+        }
+    }
+
+    pub fn count_intersections(&self) -> usize {
+        self.grid
+            .iter()
+            .fold(0, |acc, x| acc + x.iter().filter(|y| *y > &1).count())
+    }
 }
 
 impl FromStr for Point {
@@ -95,26 +118,23 @@ fn straight_path(ps: (Point, Point)) -> bool {
     ps.0.x == ps.1.x || ps.0.y == ps.1.y
 }
 
-fn count_points(ps: Vec<(Point, Point)>) -> HashMap<Point, usize> {
-    let mut map = HashMap::new();
+fn count_points(ps: Vec<(Point, Point)>) -> usize {
+    let mut grid = Grid::new();
     ps.iter().for_each(|&p| {
-        span(p).iter().for_each(|&x| {
-            let count = map.entry(x).or_insert(0);
-            *count += 1;
-        });
+        grid.insert_span(span(p));
     });
-    map
+    grid.count_intersections()
 }
 
 fn part1(lines: &[String]) -> usize {
     let mut ps = parse_lines(lines);
     ps.retain(|p| straight_path(*p));
-    count_points(ps).values().filter(|x| *x > &1).count()
+    count_points(ps)
 }
 
 fn part2(lines: &[String]) -> usize {
     let ps = parse_lines(lines);
-    count_points(ps).values().filter(|x| *x > &1).count()
+    count_points(ps)
 }
 
 pub fn run(lines: &[String]) {
