@@ -15,6 +15,7 @@ impl Board {
                     if *n == number {
                         *num = None;
                     }
+                } else {
                 };
             }
         }
