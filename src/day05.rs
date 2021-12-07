@@ -11,25 +11,48 @@ struct Point {
 
 struct Grid {
     grid: Vec<Vec<usize>>,
+    intersections: usize,
 }
 
 impl Grid {
     pub fn new() -> Self {
         Self {
             grid: vec![vec![0; 1000]; 1000],
+            intersections: 0,
         }
     }
 
-    pub fn insert_span(&mut self, ps: Vec<Point>) {
-        for p in ps {
-            self.grid[p.x as usize][p.y as usize] += 1;
+    fn insert_point(&mut self, p: Point) {
+        if self.grid[p.x as usize][p.y as usize] == 1 {
+            self.intersections += 1;
+        }
+        self.grid[p.x as usize][p.y as usize] += 1;
+    }
+
+    pub fn insert_line(&mut self, ps: (Point, Point)) {
+        let diff = ps.1 - ps.0;
+        let dir = Point {
+            x: diff.x.signum(),
+            y: diff.y.signum(),
+        };
+        if diff.x != 0 && straight_path(ps) {
+            for i in min(ps.0.x, ps.1.x)..=max(ps.0.x, ps.1.x) {
+                self.insert_point(Point { x: i, y: ps.0.y });
+            }
+        } else if diff.y != 0 && straight_path(ps) {
+            for i in min(ps.0.y, ps.1.y)..=max(ps.0.y, ps.1.y) {
+                self.insert_point(Point { x: ps.0.x, y: i });
+            }
+        } else {
+            // Diagonal path
+            for i in 0..=isize::abs(diff.x) {
+                self.insert_point(ps.0 + dir * i);
+            }
         }
     }
 
     pub fn count_intersections(&self) -> usize {
-        self.grid
-            .iter()
-            .fold(0, |acc, x| acc + x.iter().filter(|y| *y > &1).count())
+        self.intersections
     }
 }
 
@@ -90,30 +113,6 @@ fn parse_lines(lines: &[String]) -> Vec<(Point, Point)> {
     points
 }
 
-fn span(ps: (Point, Point)) -> Vec<Point> {
-    let diff = ps.1 - ps.0;
-    let dir = Point {
-        x: diff.x.signum(),
-        y: diff.y.signum(),
-    };
-    let mut span = Vec::new();
-    if diff.x != 0 && straight_path(ps) {
-        for i in min(ps.0.x, ps.1.x)..=max(ps.0.x, ps.1.x) {
-            span.push(Point { x: i, y: ps.0.y });
-        }
-    } else if diff.y != 0 && straight_path(ps) {
-        for i in min(ps.0.y, ps.1.y)..=max(ps.0.y, ps.1.y) {
-            span.push(Point { x: ps.0.x, y: i });
-        }
-    } else {
-        // Diagonal path
-        for i in 0..=isize::abs(diff.x) {
-            span.push(ps.0 + dir * i);
-        }
-    }
-    span
-}
-
 fn straight_path(ps: (Point, Point)) -> bool {
     ps.0.x == ps.1.x || ps.0.y == ps.1.y
 }
@@ -121,7 +120,7 @@ fn straight_path(ps: (Point, Point)) -> bool {
 fn count_points(ps: Vec<(Point, Point)>) -> usize {
     let mut grid = Grid::new();
     ps.iter().for_each(|&p| {
-        grid.insert_span(span(p));
+        grid.insert_line(p);
     });
     grid.count_intersections()
 }
