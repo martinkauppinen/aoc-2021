@@ -108,7 +108,7 @@ fn part2(grid: &Array2<Option<usize>>) -> usize {
     basins.iter().rev().take(3).product()
 }
 
-fn parse_input(input: &[String]) -> Array2<Option<usize>> {
+pub fn parse_input(input: &[String]) -> Array2<Option<usize>> {
     let mut grid = Array2::<Option<usize>>::default((input.len() + 2, input[0].len() + 2));
 
     let v = input
