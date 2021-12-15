@@ -15,6 +15,7 @@ mod day11;
 mod day12;
 mod day13;
 mod day14;
+mod day15;
 
 fn main() {
     let start = std::time::Instant::now();
@@ -34,6 +35,7 @@ fn main() {
     day!(day12);
     day!(day13);
     day!(day14);
+    day!(day15);
     let time = start.elapsed();
     println!("━━━━┷{:━<60}┷{:━<10}", "", "");
     println!("\nTotal time elapsed: {:?}", time);
