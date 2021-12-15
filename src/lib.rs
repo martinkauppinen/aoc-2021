@@ -28,7 +28,7 @@ impl Display for MyDuration {
                 write!(f, "{:3}.{:02} ms", whole, part)
             }
         } else if self.0.as_secs() < 1000 {
-            write!(f, "{:.02}  s", self.0.as_secs_f64())
+            write!(f, "{:>6.2}  s", self.0.as_secs_f64())
         } else {
             write!(f, "many    s")
         }
